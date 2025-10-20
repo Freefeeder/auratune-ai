@@ -101,23 +101,6 @@ export const translations = {
     "signin.button": "Iniciar Sesión",
     "signin.terms": "Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.",
 
-    // Authentication
-    "auth.login": "Iniciar Sesión",
-    "auth.signUp": "Registrarse",
-    "auth.email": "Correo Electrónico",
-    "auth.password": "Contraseña",
-    "auth.fullName": "Nombre Completo",
-    "auth.loginDescription": "Ingresa tu correo para iniciar sesión",
-    "auth.signUpDescription": "Crea una nueva cuenta",
-    "auth.loggingIn": "Iniciando sesión...",
-    "auth.creatingAccount": "Creando cuenta...",
-    "auth.noAccount": "¿No tienes cuenta?",
-    "auth.haveAccount": "¿Ya tienes cuenta?",
-    "auth.error": "Ocurrió un error",
-    "auth.checkEmail": "Revisa tu correo",
-    "auth.verifyEmailDescription": "Te hemos enviado un enlace de verificación a tu correo electrónico.",
-    "auth.verifyEmailNote": "Por favor revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.",
-
     // Subscription and Credits
     "subscription.free": "Gratis",
     "subscription.premium": "Premium",
@@ -232,23 +215,6 @@ export const translations = {
     "signin.button": "Sign In",
     "signin.terms": "By continuing, you agree to our Terms of Service and Privacy Policy.",
 
-    // Authentication
-    "auth.login": "Log In",
-    "auth.signUp": "Sign Up",
-    "auth.email": "Email",
-    "auth.password": "Password",
-    "auth.fullName": "Full Name",
-    "auth.loginDescription": "Enter your email to log in",
-    "auth.signUpDescription": "Create a new account",
-    "auth.loggingIn": "Logging in...",
-    "auth.creatingAccount": "Creating account...",
-    "auth.noAccount": "Don't have an account?",
-    "auth.haveAccount": "Already have an account?",
-    "auth.error": "An error occurred",
-    "auth.checkEmail": "Check your email",
-    "auth.verifyEmailDescription": "We've sent a verification link to your email address.",
-    "auth.verifyEmailNote": "Please check your inbox and click the link to activate your account.",
-
     // Subscription and Credits
     "subscription.free": "Free",
     "subscription.premium": "Premium",
@@ -359,23 +325,6 @@ export const translations = {
     "signin.subtitle": "登录以开始创建情感播放列表",
     "signin.button": "登录",
     "signin.terms": "继续即表示你同意我们的服务条款和隐私政策。",
-
-    // Authentication
-    "auth.login": "登录",
-    "auth.signUp": "注册",
-    "auth.email": "电子邮件",
-    "auth.password": "密码",
-    "auth.fullName": "全名",
-    "auth.loginDescription": "输入你的电子邮件登录",
-    "auth.signUpDescription": "创建新账户",
-    "auth.loggingIn": "正在登录...",
-    "auth.creatingAccount": "正在创建账户...",
-    "auth.noAccount": "没有账户？",
-    "auth.haveAccount": "已有账户？",
-    "auth.error": "发生错误",
-    "auth.checkEmail": "检查你的电子邮件",
-    "auth.verifyEmailDescription": "我们已向你的电子邮件地址发送了验证链接。",
-    "auth.verifyEmailNote": "请检查你的收件箱并点击链接激活你的账户。",
 
     // Subscription and Credits
     "subscription.free": "免费",
