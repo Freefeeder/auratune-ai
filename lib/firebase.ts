@@ -1,18 +1,22 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // Importar Firestore
 
-// TODO: Replace with your web app's Firebase configuration
+// La configuración de Firebase de tu aplicación web
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAwS3RrPYPKjp3WdTVbsR0xqhQwzaAcMcY",
+  authDomain: "auratune-ai.firebaseapp.com",
+  projectId: "auratune-ai",
+  storageBucket: "auratune-ai.appspot.com",
+  messagingSenderId: "381269265627",
+  appId: "1:381269265627:web:314ef9aeaff4f0b2cb50fe",
+  measurementId: "G-8ELWW8YH18"
 };
 
-// Initialize Firebase
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app); // Inicializar Firestore
 
-export { app, auth };
+export { app, auth, googleProvider, db }; // Exportar db

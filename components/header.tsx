@@ -1,43 +1,37 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { Music } from "lucide-react"
+'use client'
 import Link from "next/link"
+import { MountainIcon } from "./icons/mountain-icon"
 import { useLanguage } from "@/lib/language-context"
-import { LanguageSelector } from "@/components/language-selector"
+import { LanguageSwitcher } from "./language-switcher"
+import { UserNav } from "./user-nav" // Importamos el nuevo componente
 
 export function Header() {
   const { t } = useLanguage()
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <Music className="h-6 w-6 text-primary-foreground" />
-          </div>
-          <span className="text-xl font-bold">AuraTune AI</span>
+    <header className="px-4 lg:px-6 h-14 flex items-center bg-background fixed top-0 left-0 right-0 z-50 shadow-sm">
+      <Link href="/" className="flex items-center justify-center" prefetch={false}>
+        <MountainIcon className="h-6 w-6" />
+        <span className="sr-only">AuraTune AI</span>
+      </Link>
+      <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
+        <Link
+          href="#features"
+          className="text-sm font-medium hover:underline underline-offset-4"
+          prefetch={false}
+        >
+          {t("header.features")}
         </Link>
-
-        <nav className="hidden items-center gap-6 md:flex">
-          <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-            {t("header.features")}
-          </Link>
-          <Link href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-            {t("header.howItWorks")}
-          </Link>
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <LanguageSelector />
-          <Link href="/auth/login">
-            <Button variant="ghost">{t("auth.login")}</Button>
-          </Link>
-          <Link href="/auth/signup">
-            <Button>{t("auth.signUp")}</Button>
-          </Link>
-        </div>
-      </div>
+        <Link
+          href="#how-it-works"
+          className="text-sm font-medium hover:underline underline-offset-4"
+          prefetch={false}
+        >
+          {t("header.howItWorks")}
+        </Link>
+        <LanguageSwitcher />
+        <UserNav />
+      </nav>
     </header>
   )
 }

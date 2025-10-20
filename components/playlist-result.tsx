@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Music, ExternalLink, Check } from "lucide-react"
+import { Music, ExternalLink, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useLanguage } from "@/lib/language-context"
+import { useAuth } from "@/lib/auth-context" // Importamos el hook de autenticación
 
 interface Track {
   name: string
@@ -25,32 +26,43 @@ interface PlaylistResultProps {
 
 export function PlaylistResult({ playlist }: PlaylistResultProps) {
   const { t } = useLanguage()
+  const { user } = useAuth() // Obtenemos el usuario de Firebase
   const [isSaving, setIsSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
   const handleSaveToSpotify = async () => {
+    if (!user) {
+      alert("Debes iniciar sesión para guardar una playlist.")
+      return
+    }
+
     setIsSaving(true)
     try {
+      const token = await user.getIdToken() // Obtenemos el token de Firebase
+
       const response = await fetch("/api/save-to-spotify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Añadimos el token a la cabecera
+        },
         body: JSON.stringify(playlist),
       })
 
-      if (!response.ok) throw new Error("Failed to save playlist")
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Fallo al guardar la playlist")
+      }
 
       const data = await response.json()
       setSaved(true)
-
-      // Open Spotify playlist in new tab
-      if (data.spotifyUrl) {
-        window.open(data.spotifyUrl, "_blank")
-      }
+      console.log("Respuesta de guardado (simulada):", data)
 
       alert(t("result.success"))
+
     } catch (error) {
-      console.error("Error saving playlist:", error)
-      alert(t("result.error"))
+      console.error("Error guardando la playlist:", error)
+      alert(error instanceof Error ? error.message : t("result.error"))
     } finally {
       setIsSaving(false)
     }
@@ -67,16 +79,21 @@ export function PlaylistResult({ playlist }: PlaylistResultProps) {
             </CardTitle>
             <CardDescription className="mt-2">{playlist.description}</CardDescription>
           </div>
-          <Button onClick={handleSaveToSpotify} disabled={isSaving || saved} size="sm">
+          <Button onClick={handleSaveToSpotify} disabled={isSaving || saved || !user} size="sm">
             {saved ? (
               <>
                 <Check className="mr-2 h-4 w-4" />
-                {t("result.success")}
+                ¡Guardada!
+              </>
+            ) : isSaving ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {t("result.saving")}
               </>
             ) : (
               <>
                 <ExternalLink className="mr-2 h-4 w-4" />
-                {isSaving ? t("result.saving") : t("result.save")}
+                {t("result.save")}
               </>
             )}
           </Button>

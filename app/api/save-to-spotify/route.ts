@@ -1,37 +1,53 @@
-import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { NextResponse, type NextRequest } from "next/server";
+import { adminAuth } from "@/lib/firebase-admin";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    // 1. Autenticación con Firebase Admin
+    const authorization = request.headers.get("Authorization");
+    if (!authorization?.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "No autorizado: Falta el token" }, { status: 401 });
+    }
+    const token = authorization.split("Bearer ")[1];
+    let uid: string;
 
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    try {
+      const decodedToken = await adminAuth.verifyIdToken(token);
+      uid = decodedToken.uid;
+      console.log(`Usuario autenticado con éxito para guardar en Spotify: ${uid}`);
+    } catch (error) {
+      console.error("Error de autenticación de Firebase:", error);
+      return NextResponse.json({ error: "No autorizado: Token inválido" }, { status: 401 });
     }
 
-    const { name, description, tracks } = await request.json()
+    // 2. Parsear el cuerpo de la solicitud
+    const { name, description, tracks } = await request.json();
 
     if (!name || !Array.isArray(tracks)) {
-      return NextResponse.json({ error: "Invalid playlist data" }, { status: 400 })
+      return NextResponse.json({ error: "Datos de la playlist inválidos" }, { status: 400 });
     }
 
-    // This functionality requires users to connect their Spotify account
-    // For now, we'll return the playlist data without saving to Spotify
+    // 3. [LÓGICA DE SPOTIFY DESACTIVADA TEMPORALMENTE]
+    // TODO: Implementar el flujo OAuth2 de Spotify para obtener un token de acceso
+    // y luego usar la API de Spotify para crear la playlist y añadir las pistas.
+    console.log(`[SAVE-TO-SPOTIFY] El usuario ${uid} intentó guardar la playlist "${name}". La funcionalidad real de Spotify está pendiente.`);
+
+    // 4. Devolver una respuesta simulada exitosa
+    // Esta respuesta permite al frontend confirmar que el proceso "funcionó"
+    // mientras la integración real está en desarrollo.
     return NextResponse.json({
       success: true,
-      message: "Playlist generated successfully",
-      note: "To save to Spotify, please connect your Spotify account in settings",
+      message: "La playlist fue procesada exitosamente (simulado)",
+      note: "Para guardar en Spotify, necesitas conectar tu cuenta. Esta función se implementará pronto.",
       playlist: {
         name,
         description,
         tracks,
       },
-    })
+    });
+
   } catch (error) {
-    console.error("[v0] Error processing playlist:", error)
-    return NextResponse.json({ error: "Failed to process playlist" }, { status: 500 })
+    console.error("[API /save-to-spotify] Error:", error);
+    return NextResponse.json({ error: "No se pudo procesar la playlist" }, { status: 500 });
   }
 }

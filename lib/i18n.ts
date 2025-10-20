@@ -95,12 +95,32 @@ export const translations = {
     "userNav.settings": "Configuración",
     "userNav.logout": "Cerrar Sesión",
 
-    // Sign In
+    // Sign In & Auth
     "signin.title": "Bienvenido a AuraTune AI",
     "signin.subtitle": "Inicia sesión para comenzar a crear playlists emocionales",
     "signin.button": "Iniciar Sesión",
     "signin.terms": "Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.",
+    "auth.loginWithGoogle": "Iniciar sesión con Google",
+    "auth.emailLabel": "Correo Electrónico",
+    "auth.passwordLabel": "Contraseña",
+    "auth.loginButton": "Iniciar Sesión",
+    "auth.signupButton": "Crear Cuenta",
+    "auth.or": "O continuar con",
+    "auth.toggle.signup": "¿No tienes una cuenta? Regístrate",
+    "auth.toggle.login": "¿Ya tienes una cuenta? Inicia sesión",
 
+    // Settings Page
+    "settings.title": "Configuración de la Cuenta",
+    "settings.subtitle": "Gestiona la información de tu perfil y preferencias.",
+    "settings.profile.title": "Perfil",
+    "settings.profile.description": "Esta información se mostrará públicamente.",
+    "settings.profile.name": "Nombre para mostrar",
+    "settings.profile.email": "Correo electrónico",
+    "settings.profile.save": "Guardar Cambios",
+    "settings.dangerZone.title": "Zona de Peligro",
+    "settings.dangerZone.description": "Estas acciones son permanentes y no se pueden deshacer.",
+    "settings.dangerZone.delete": "Eliminar mi cuenta",
+    
     // Subscription and Credits
     "subscription.free": "Gratis",
     "subscription.premium": "Premium",
@@ -209,11 +229,31 @@ export const translations = {
     "userNav.settings": "Settings",
     "userNav.logout": "Log Out",
 
-    // Sign In
+    // Sign In & Auth
     "signin.title": "Welcome to AuraTune AI",
     "signin.subtitle": "Sign in to start creating emotional playlists",
     "signin.button": "Sign In",
     "signin.terms": "By continuing, you agree to our Terms of Service and Privacy Policy.",
+    "auth.loginWithGoogle": "Login with Google",
+    "auth.emailLabel": "Email",
+    "auth.passwordLabel": "Password",
+    "auth.loginButton": "Login",
+    "auth.signupButton": "Sign Up",
+    "auth.or": "Or continue with",
+    "auth.toggle.signup": "Don't have an account? Sign up",
+    "auth.toggle.login": "Already have an account? Login",
+
+    // Settings Page
+    "settings.title": "Account Settings",
+    "settings.subtitle": "Manage your profile information and preferences.",
+    "settings.profile.title": "Profile",
+    "settings.profile.description": "This information will be displayed publicly.",
+    "settings.profile.name": "Display Name",
+    "settings.profile.email": "Email Address",
+    "settings.profile.save": "Save Changes",
+    "settings.dangerZone.title": "Danger Zone",
+    "settings.dangerZone.description": "These actions are permanent and cannot be undone.",
+    "settings.dangerZone.delete": "Delete My Account",
 
     // Subscription and Credits
     "subscription.free": "Free",
@@ -320,11 +360,31 @@ export const translations = {
     "userNav.settings": "设置",
     "userNav.logout": "退出登录",
 
-    // Sign In
+    // Sign In & Auth
     "signin.title": "欢迎来到AuraTune AI",
     "signin.subtitle": "登录以开始创建情感播放列表",
     "signin.button": "登录",
     "signin.terms": "继续即表示你同意我们的服务条款和隐私政策。",
+    "auth.loginWithGoogle": "使用谷歌登录",
+    "auth.emailLabel": "电子邮件",
+    "auth.passwordLabel": "密码",
+    "auth.loginButton": "登录",
+    "auth.signupButton": "注册",
+    "auth.or": "或继续",
+    "auth.toggle.signup": "没有帐户？注册",
+    "auth.toggle.login": "已有帐户？登录",
+
+    // Settings Page
+    "settings.title": "帐户设置",
+    "settings.subtitle": "管理你的个人资料信息和偏好。",
+    "settings.profile.title": "个人资料",
+    "settings.profile.description": "此信息将公开显示。",
+    "settings.profile.name": "显示名称",
+    "settings.profile.email": "电子邮件地址",
+    "settings.profile.save": "保存更改",
+    "settings.dangerZone.title": "危险区域",
+    "settings.dangerZone.description": "这些操作是永久性的，无法撤消。",
+    "settings.dangerZone.delete": "删除我的帐户",
 
     // Subscription and Credits
     "subscription.free": "免费",

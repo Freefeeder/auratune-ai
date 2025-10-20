@@ -1,9 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-// La dependencia de Vercel Analytics se elimina
 import "./globals.css"
 import { LanguageProvider } from "@/lib/language-context"
+import { AuthProvider } from "@/lib/auth-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -21,8 +21,9 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark">
       <body className={`${inter.className} font-sans antialiased`}>
-        <LanguageProvider initialLocale="es">{children}</LanguageProvider>
-        {/* Aquí puedes añadir la solución de analíticas que elijas para Netlify */}
+        <AuthProvider>
+          <LanguageProvider initialLocale="es">{children}</LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   )

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -6,33 +6,25 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Sparkles, Music2, Loader2, Coins } from "lucide-react"
+import { Sparkles, Music2, Loader2 } from "lucide-react"
 import { PlaylistResult } from "@/components/playlist-result"
 import { useLanguage } from "@/lib/language-context"
 import { detectLanguage } from "@/lib/i18n"
-import { useRouter } from "next/navigation"
+import { useAuth } from "@/lib/auth-context" // Importamos el hook de autenticación
 
-interface PlaylistGeneratorProps {
-  subscription: {
-    credits: number
-    subscription_type: string
-    status: string
-  } | null
-}
-
-export function PlaylistGenerator({ subscription }: PlaylistGeneratorProps) {
+export function PlaylistGenerator() {
   const { t, setLocale } = useLanguage()
-  const router = useRouter()
+  const { user } = useAuth() // Obtenemos el usuario de Firebase
   const [emotion, setEmotion] = useState("")
   const [playlistName, setPlaylistName] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
   const [playlist, setPlaylist] = useState<any>(null)
 
-  const canGenerate =
-    subscription && (subscription.subscription_type === "premium" || subscription.credits > 0) && !isGenerating
+  // Un usuario puede generar si está logueado y no hay una generación en curso.
+  const canGenerate = !!user && !isGenerating
 
   const handleGenerate = async () => {
-    if (!emotion.trim() || !canGenerate) return
+    if (!emotion.trim() || !canGenerate || !user) return
 
     const detectedLocale = detectLanguage(emotion.trim())
     setLocale(detectedLocale)
@@ -41,10 +33,19 @@ export function PlaylistGenerator({ subscription }: PlaylistGeneratorProps) {
     setPlaylist(null)
 
     try {
-      // Step 1: Analyze emotion and get recommendations
+      // Obtenemos el token de ID de Firebase del usuario.
+      const token = await user.getIdToken()
+
+      // Preparamos los headers con el token de autorización.
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+
+      // Paso 1: Analizar emoción y obtener recomendaciones
       const analysisResponse = await fetch("/api/generate-playlist", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: headers, // Usamos los nuevos headers
         body: JSON.stringify({
           emotion: emotion.trim(),
           playlistName: playlistName.trim() || undefined,
@@ -54,25 +55,25 @@ export function PlaylistGenerator({ subscription }: PlaylistGeneratorProps) {
 
       if (!analysisResponse.ok) {
         const error = await analysisResponse.json()
-        throw new Error(error.error || "Failed to analyze emotion")
+        throw new Error(error.error || "Fallo al analizar la emoción")
       }
 
       const analysis = await analysisResponse.json()
 
-      // Step 2: Search for actual tracks on Spotify
+      // Paso 2: Buscar las pistas en Spotify
       const searchResponse = await fetch("/api/search-tracks", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: headers, // Usamos los nuevos headers también aquí
         body: JSON.stringify({
           queries: analysis.track_recommendations.map((rec: any) => rec.query),
         }),
       })
 
-      if (!searchResponse.ok) throw new Error("Failed to search tracks")
+      if (!searchResponse.ok) throw new Error("Fallo al buscar las pistas")
 
       const { tracks } = await searchResponse.json()
 
-      // Combine analysis with actual tracks
+      // Combinar análisis con las pistas reales
       setPlaylist({
         name: analysis.name,
         description: analysis.description,
@@ -80,9 +81,8 @@ export function PlaylistGenerator({ subscription }: PlaylistGeneratorProps) {
         tracks: tracks,
       })
 
-      router.refresh()
     } catch (error) {
-      console.error("[v0] Error generating playlist:", error)
+      console.error("[PlaylistGenerator] Error:", error)
       alert(error instanceof Error ? error.message : t("generator.error"))
     } finally {
       setIsGenerating(false)
@@ -101,14 +101,7 @@ export function PlaylistGenerator({ subscription }: PlaylistGeneratorProps) {
               </CardTitle>
               <CardDescription>{t("generator.description")}</CardDescription>
             </div>
-            {subscription && subscription.subscription_type !== "premium" && (
-              <div className="flex items-center gap-2 rounded-lg border bg-muted px-3 py-2">
-                <Coins className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm font-medium">
-                  {subscription.credits} {t("subscription.creditsRemaining")}
-                </span>
-              </div>
-            )}
+            {/* La lógica de créditos se ha eliminado temporalmente */}
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
