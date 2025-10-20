@@ -1,9 +1,10 @@
-"use client"
+'use client'
 
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/lib/language-context"
+import { HowItWorksAnimation } from "@/components/how-it-works-animation"
 
 export function Hero() {
   const { t } = useLanguage()
@@ -44,15 +45,9 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="mt-16">
-            <div className="relative mx-auto max-w-5xl rounded-xl border border-border/50 bg-card/50 p-2 shadow-2xl backdrop-blur">
-              <img
-                src="/modern-music-app-interface-dark-theme-with-playlis.jpg"
-                alt="AuraTune AI App Interface"
-                className="rounded-lg"
-              />
-            </div>
-          </div>
+          {/* Insert the new animation component here */}
+          <HowItWorksAnimation />
+
         </div>
       </div>
     </section>

@@ -104,7 +104,7 @@ export const translations = {
     "auth.emailLabel": "Correo Electrónico",
     "auth.passwordLabel": "Contraseña",
     "auth.loginButton": "Iniciar Sesión",
-    "auth.signupButton": "Crear Cuenta",
+    "auth.signupButton": "Regístrate",
     "auth.or": "O continuar con",
     "auth.toggle.signup": "¿No tienes una cuenta? Regístrate",
     "auth.toggle.login": "¿Ya tienes una cuenta? Inicia sesión",
@@ -237,11 +237,11 @@ export const translations = {
     "auth.loginWithGoogle": "Login with Google",
     "auth.emailLabel": "Email",
     "auth.passwordLabel": "Password",
-    "auth.loginButton": "Login",
+    "auth.loginButton": "Sign In",
     "auth.signupButton": "Sign Up",
     "auth.or": "Or continue with",
     "auth.toggle.signup": "Don't have an account? Sign up",
-    "auth.toggle.login": "Already have an account? Login",
+    "auth.toggle.login": "Already have an account? Sign in",
 
     // Settings Page
     "settings.title": "Account Settings",
